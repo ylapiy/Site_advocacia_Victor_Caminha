@@ -233,46 +233,62 @@ p{margin:0}
 .duo--escuro .duo__col p{color:var(--texto-clr-2)}
 
 /* ============================================================
-   3. MÉTODO — painel claro com cantos chanfrados
+   3+4. SERVIÇOS E DIFERENCIAIS — método + setores unificados,
+   degradê do claro (seção 2) ao preto, triângulos cinzas nas pontas
    ============================================================ */
-.metodo{padding:clamp(80px,10vw,140px) 0;background:var(--tinta)}
-.chanfro{
-  background:var(--calcario);color:var(--texto-esc);
-  clip-path:polygon(var(--chanfro) 0,100% 0,100% calc(100% - var(--chanfro)),calc(100% - var(--chanfro)) 100%,0 100%,0 var(--chanfro));
-  padding:clamp(44px,6vw,78px);
+.servicos{
+  position:relative;overflow:hidden;
+  padding:clamp(64px,8vw,110px) 0 clamp(90px,11vw,150px);
+  background:linear-gradient(180deg,var(--calcario) 0%,var(--tinta) 46%);
 }
+.servicos__triangulo{
+  position:absolute;top:0;bottom:0;width:clamp(70px,10vw,180px);
+  background:var(--texto-mid);opacity:.55;pointer-events:none;
+}
+.servicos__triangulo--esq{left:0;clip-path:polygon(0 0,100% 50%,0 100%)}
+.servicos__triangulo--dir{right:0;clip-path:polygon(100% 0,0 50%,100% 100%)}
+
+.servicos__wrap{
+  position:relative;z-index:1;
+  max-width:1560px;margin-inline:auto;
+  padding-inline:clamp(24px,5.5vw,90px);
+}
+
 .metodo__topo{text-align:center;max-width:60ch;margin-inline:auto}
 .metodo__topo .rotulo{justify-content:center}
-.metodo__topo h2{margin:20px 0 0}
-.metodo__grade{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
-.bloco{background:var(--grafite);color:var(--texto-clr);padding:32px 30px}
-.bloco h3{color:var(--papel);margin-bottom:12px}
-.bloco p{font-size:14.5px;color:var(--texto-clr-2)}
+.metodo__topo h2{margin:20px 0 0;color:var(--texto-esc)}
+
+.servicos__linha{
+  display:flex;flex-wrap:wrap;align-items:stretch;
+  gap:clamp(26px,3.4vw,54px);
+  margin-top:clamp(48px,6vw,80px);
+}
+
+.servicos__metodo{
+  flex:1.35 1 440px;
+  background:var(--grafite);
+  clip-path:polygon(var(--chanfro) 0,100% 0,100% calc(100% - var(--chanfro)),calc(100% - var(--chanfro)) 100%,0 100%,0 var(--chanfro));
+  padding:clamp(38px,4.6vw,60px);
+}
+.metodo__grade{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.bloco{background:var(--grafite-2);color:var(--texto-clr);padding:clamp(32px,3.6vw,46px) clamp(28px,3.2vw,38px)}
+.bloco h3{color:var(--papel);margin-bottom:14px;font-size:clamp(21px,2.1vw,28px)}
+.bloco p{font-size:clamp(15px,1.25vw,17px);color:var(--texto-clr-2)}
 .bloco--largo{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:26px}
 .bloco--largo p{max-width:58ch}
 
-/* ============================================================
-   4. SETORES + NÚMEROS — duas colunas
-   ============================================================ */
-.setores{padding:0 0 clamp(80px,10vw,140px);background:var(--tinta)}
-.setores__grade{display:grid;grid-template-columns:1.05fr 1fr;gap:0}
-.setores__col{padding:clamp(40px,5vw,64px)}
-.setores__col + .setores__col{border-left:1px solid rgba(19,26,29,.16)}
-.setores__col h3{margin:18px 0 26px}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.servicos__setores{flex:1 1 300px;color:var(--papel)}
+.servicos__setores .rotulo{color:var(--latao-luz)}
+.servicos__setores h3{margin:18px 0 26px;color:var(--papel)}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .tile{
-  background:var(--grafite);color:var(--texto-clr-2);
-  aspect-ratio:1.45/1;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:8px;
-  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;
+  background:var(--grafite-2);color:var(--texto-clr-2);
+  aspect-ratio:1.5/1;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:10px;
+  font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;
   transition:background .3s ease,color .3s ease;
 }
 .tile:hover{background:var(--oliva);color:var(--papel)}
-.setores__texto p{color:var(--texto-mid);max-width:46ch}
-.numeros{margin-top:34px;display:grid;gap:1px;background:rgba(19,26,29,.16)}
-.numero{background:var(--calcario);padding:18px 4px 18px 0;display:flex;align-items:baseline;gap:18px}
-.numero b{font-family:var(--display);font-size:36px;font-weight:400;color:var(--texto-esc);min-width:108px}
-.numero span{font-size:12.5px;letter-spacing:.06em;color:var(--texto-mid)}
 
 /* ============================================================
    5. ÁREAS — sanfona horizontal (expande ao clicar)
@@ -364,8 +380,8 @@ p{margin:0}
   .escritorio,.contato{grid-template-columns:1fr}
   .escritorio__img{min-height:340px;order:-1}
   .contato__img{min-height:320px}
-  .setores__grade{grid-template-columns:1fr}
-  .setores__col + .setores__col{border-left:0;border-top:1px solid rgba(19,26,29,.16)}
+  .servicos__linha{flex-direction:column}
+  .servicos__triangulo{display:none}
   .metodo__grade{grid-template-columns:1fr}
   .sanfona{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
   .aba{flex:0 0 78%;scroll-snap-align:start}
@@ -381,9 +397,8 @@ p{margin:0}
   .duo__col--desce,
   .duo--inverso .duo__col:first-of-type{margin-top:0}
   .duo__col + .duo__col{padding-top:36px;border-top:1px solid var(--duo-linha)}
-  .tiles{grid-template-columns:repeat(3,1fr)}
+  .tiles{grid-template-columns:repeat(2,1fr)}
   .form__linha{grid-template-columns:1fr}
-  .numero b{min-width:84px;font-size:30px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
@@ -465,62 +480,47 @@ p{margin:0}
     </div>
   </section>
 
-  <!-- ============ 3. MÉTODO ============ -->
-  <section class="metodo" id="metodo">
-    <div class="wrap">
-      <div class="chanfro rev">
-        <div class="metodo__topo">
-          <div class="rotulo">Como trabalhamos</div>
-          <h2>Três compromissos que valem para todo cliente</h2>
-        </div>
+  <!-- ============ 3+4. SERVIÇOS E DIFERENCIAIS (método + setores) ============ -->
+  <section class="servicos" id="metodo">
+    <span class="servicos__triangulo servicos__triangulo--esq" aria-hidden="true"></span>
+    <span class="servicos__triangulo servicos__triangulo--dir" aria-hidden="true"></span>
 
-        <div class="metodo__grade">
-          <div class="bloco">
-            <h3>Linguagem de decisão</h3>
-            <p>Todo parecer termina com uma recomendação clara: o que fazer, qual o risco de fazer e qual o risco de não fazer. Sem fundamentação decorativa.</p>
-          </div>
-          <div class="bloco">
-            <h3>Honorário previsível</h3>
-            <p>Escopo, valor e forma de reajuste definidos antes do início. Trabalho fora do escopo só avança com aprovação por escrito.</p>
-          </div>
-          <div class="bloco bloco--largo">
-            <p>E um terceiro, que sustenta os dois anteriores: sigilo tratado como método. Documentos em ambiente controlado, acesso restrito à equipe do caso e política de retenção definida em contrato.</p>
-            <a href="#contato" class="btn">Solicitar proposta</a>
-          </div>
-        </div>
+    <div class="servicos__wrap">
+      <div class="metodo__topo rev">
+        <div class="rotulo">Serviços e diferenciais</div>
+        <h2>Três compromissos que valem para todo cliente</h2>
       </div>
-    </div>
-  </section>
 
-  <!-- ============ 4. SETORES + NÚMEROS ============ -->
-  <section class="setores" id="setores">
-    <div class="wrap">
-      <div class="chanfro rev">
-        <div class="setores__grade">
-          <div class="setores__col">
-            <div class="rotulo">Setores atendidos</div>
-            <h3>Onde já conhecemos o terreno</h3>
-            <div class="tiles">
-              <div class="tile">Agronegócio</div>
-              <div class="tile">Construção</div>
-              <div class="tile">Saúde</div>
-              <div class="tile">Varejo</div>
-              <div class="tile">Tecnologia</div>
-              <div class="tile">Logística</div>
-              <div class="tile">Energia</div>
-              <div class="tile">Educação</div>
+      <div class="servicos__linha">
+        <div class="servicos__metodo rev">
+          <div class="metodo__grade">
+            <div class="bloco">
+              <h3>Linguagem de decisão</h3>
+              <p>Todo parecer termina com uma recomendação clara: o que fazer, qual o risco de fazer e qual o risco de não fazer. Sem fundamentação decorativa.</p>
+            </div>
+            <div class="bloco">
+              <h3>Honorário previsível</h3>
+              <p>Escopo, valor e forma de reajuste definidos antes do início. Trabalho fora do escopo só avança com aprovação por escrito.</p>
+            </div>
+            <div class="bloco bloco--largo">
+              <p>E um terceiro, que sustenta os dois anteriores: sigilo tratado como método. Documentos em ambiente controlado, acesso restrito à equipe do caso e política de retenção definida em contrato.</p>
+              <a href="#contato" class="btn">Solicitar proposta</a>
             </div>
           </div>
+        </div>
 
-          <div class="setores__col setores__texto">
-            <div class="rotulo">Em números</div>
-            <h3>O que sustenta a recomendação</h3>
-            <p>Experiência concentrada em operações empresariais — societário, contratos e disputas de médio e grande porte.</p>
-            <div class="numeros">
-              <div class="numero"><b>12</b><span>anos dedicados exclusivamente ao direito empresarial</span></div>
-              <div class="numero"><b>+400</b><span>contratos revisados e negociados</span></div>
-              <div class="numero"><b>72h</b><span>prazo máximo de retorno para clientes do consultivo</span></div>
-            </div>
+        <div class="servicos__setores rev" id="setores">
+          <div class="rotulo">Setores atendidos</div>
+          <h3>Onde já conhecemos o terreno</h3>
+          <div class="tiles">
+            <div class="tile">Agronegócio</div>
+            <div class="tile">Construção</div>
+            <div class="tile">Saúde</div>
+            <div class="tile">Varejo</div>
+            <div class="tile">Tecnologia</div>
+            <div class="tile">Logística</div>
+            <div class="tile">Energia</div>
+            <div class="tile">Educação</div>
           </div>
         </div>
       </div>
