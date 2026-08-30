@@ -248,6 +248,10 @@ ul {
   border-bottom: 2px solid #000;
 }
 
+.highlights-no-divider {
+  border-bottom: none;
+}
+
 .highlights-overlay {
   position: absolute;
   inset: 0;
@@ -298,6 +302,18 @@ ul {
   font-weight: bold;
 }
 
+.highlights-grid-7 {
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.highlight-card-top {
+  grid-column: span 4;
+}
+
+.highlight-card-bottom {
+  grid-column: span 3;
+}
+
 /* ===== Responsivo ===== */
 
 @media (max-width: 900px) {
@@ -338,5 +354,10 @@ ul {
 
   .highlights-grid {
     grid-template-columns: 1fr;
+  }
+
+  .highlight-card-top,
+  .highlight-card-bottom {
+    grid-column: span 1;
   }
 }
