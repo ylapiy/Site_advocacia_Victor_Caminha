@@ -164,25 +164,24 @@ p{margin:0}
    ============================================================ */
 .escritorio{
   display:grid;grid-template-columns:37% 63%;background:var(--calcario);
-  margin-top:clamp(90px,16vh,190px);   /* faixa escura entre o hero e a seção */
+  margin-top:clamp(32px,5vh,64px);   /* faixa escura entre o hero e a seção */
 }
 .escritorio__img{min-height:660px}
 
 /* trio de triângulos em degradê — do preto ao branco */
 .escritorio__degrade{position:relative;overflow:hidden;background:var(--calcario)}
 .escritorio__degrade span{position:absolute;inset:0}
-.escritorio__degrade span:nth-child(1){background:var(--texto-mid);clip-path:polygon(0 0,100% 0,0 100%)}
-.escritorio__degrade span:nth-child(2){background:var(--grafite-2);clip-path:polygon(0 0,100% 0,0 66%)}
-.escritorio__degrade span:nth-child(3){background:var(--tinta);clip-path:polygon(0 0,100% 0,0 34%)}
+.escritorio__degrade span:nth-child(1){background:var(--texto-mid);clip-path:polygon(0 0,100% 0,0 50%)}
+.escritorio__degrade span:nth-child(2){background:var(--grafite-2);clip-path:polygon(0 0,100% 0,0 33%)}
+.escritorio__degrade span:nth-child(3){background:var(--tinta);clip-path:polygon(0 0,100% 0,0 17%)}
 
 .escritorio__lado{padding:clamp(48px,5.5vw,84px) clamp(28px,3.6vw,60px);color:var(--texto-esc)}
 .escritorio__intro{max-width:52ch;margin-inline:auto;text-align:center}
 .escritorio__intro .rotulo{justify-content:center}
 .escritorio__intro h2{
-  font-size:clamp(23px,2.4vw,32px);      /* título mais discreto */
-  margin:16px 0 12px;color:var(--texto-esc);
+  font-size:clamp(14px,1.1vw,17px);      /* título bem discreto */
+  margin:16px 0 0;color:var(--texto-esc);
 }
-.escritorio__intro p{font-size:14px;line-height:1.6;color:var(--texto-mid);max-width:48ch;margin-inline:auto}
 
 /* ------------------------------------------------------------
    COMPONENTE REUTILIZÁVEL — .duo
@@ -222,7 +221,7 @@ p{margin:0}
 
 .duo__num{font-family:var(--display);font-size:13px;letter-spacing:.22em;color:var(--latao)}
 .duo__col h3{margin:16px 0 14px;font-size:clamp(22px,2.5vw,30px);color:var(--texto-esc)}
-.duo__col p{font-size:16.5px;line-height:1.68;color:var(--texto-mid)}
+.duo__col p{font-size:22px;line-height:1.5;color:var(--texto-mid)}
 .duo__extra{
   margin-top:20px;padding-top:18px;font-size:15px;color:var(--texto-esc);
   border-top:1px solid var(--duo-linha);
@@ -443,8 +442,7 @@ p{margin:0}
     <div class="escritorio__lado">
       <div class="escritorio__intro rev">
         <div class="rotulo">O escritório</div>
-        <h2>Um jurídico por perto, não um parecer por e-mail</h2>
-        <p>Trabalhamos dentro da rotina da empresa: no contrato antes da assinatura, na reunião de sócios antes do impasse, na operação antes da autuação. A litigância existe — mas é a última linha, não a primeira.</p>
+        <h2>Um jurídico presente na rotina da empresa</h2>
       </div>
 
       <div class="duo rev">
