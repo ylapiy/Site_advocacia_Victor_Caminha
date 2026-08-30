@@ -258,44 +258,55 @@ p{margin:0}
 .metodo__topo .rotulo{justify-content:center}
 .metodo__topo h2{margin:20px 0 0;color:var(--texto-esc)}
 
-.servicos__linha{
-  display:flex;flex-wrap:wrap;align-items:stretch;
-  gap:clamp(26px,3.4vw,54px);
-  margin-top:clamp(48px,6vw,80px);
-}
-
 .servicos__metodo{
-  flex:1.35 1 440px;display:flex;flex-direction:column;
+  max-width:960px;margin-inline:auto;
   background:var(--grafite);
   clip-path:polygon(var(--chanfro) 0,100% 0,100% calc(100% - var(--chanfro)),calc(100% - var(--chanfro)) 100%,0 100%,0 var(--chanfro));
   padding:clamp(38px,4.6vw,60px);
 }
-.metodo__grade{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;gap:24px;flex:1}
+.metodo__grade{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .bloco{background:var(--grafite-2);color:var(--texto-clr);padding:clamp(32px,3.6vw,46px) clamp(28px,3.2vw,38px);border-radius:14px}
 .bloco h3{color:var(--papel);margin-bottom:14px;font-size:clamp(21px,2.1vw,28px)}
 .bloco p{font-size:clamp(15px,1.25vw,17px);color:var(--texto-clr-2)}
 .bloco--largo{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:26px}
 .bloco--largo p{max-width:58ch}
 
-.servicos__setores{flex:1 1 300px;color:var(--papel)}
-.servicos__setores .rotulo{color:var(--latao-luz)}
+.servicos__setores-linha{
+  display:flex;align-items:stretch;gap:clamp(26px,3.4vw,54px);
+  max-width:960px;margin-inline:auto;
+  margin-top:clamp(48px,6vw,80px);
+}
+.servicos__setores-barra{flex:none;width:1px;background:rgba(255,255,255,.16)}
+.servicos__setores{flex:1 1 0;color:var(--papel);text-align:center}
+.servicos__setores .rotulo{color:var(--latao-luz);justify-content:center}
 .servicos__setores h3{margin:18px 0 26px;color:var(--papel)}
-.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-items:start}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;justify-items:center}
+.tiles--7{grid-template-columns:repeat(4,1fr)}
 .tile{
-  width:100%;background:var(--grafite-2);color:var(--texto-clr-2);
+  position:relative;width:100%;background:var(--grafite-2);color:var(--texto-clr-2);
   min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:14px 16px;border-radius:12px;
-  transition:background .3s ease,color .3s ease,min-height .3s ease;
+  transition:background .3s ease,color .3s ease;
 }
-.tile:hover{background:var(--oliva);color:var(--papel);min-height:190px}
+.tile:hover{background:var(--oliva);color:var(--papel)}
 .tile__nome{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.3}
 .tile__desc{
-  max-height:0;opacity:0;margin-top:0;overflow:hidden;
-  font-size:12px;letter-spacing:normal;text-transform:none;line-height:1.5;color:var(--texto-clr-2);
-  transition:max-height .35s ease,opacity .3s ease .05s,margin-top .35s ease;
+  position:absolute;left:50%;bottom:calc(100% + 12px);
+  width:max(180px,120%);
+  background:var(--oliva);color:var(--papel);
+  padding:14px 16px;border-radius:10px;
+  font-size:12px;letter-spacing:normal;text-transform:none;line-height:1.5;
+  box-shadow:0 18px 34px -16px rgba(0,0,0,.65);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translate(-50%,6px);
+  transition:opacity .25s ease,transform .25s ease,visibility .25s;
+  z-index:5;
 }
-.tile:hover .tile__desc{max-height:160px;opacity:1;margin-top:10px}
-.tile:hover .tile__nome{color:var(--papel)}
+.tile__desc::after{
+  content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:7px solid transparent;border-top-color:var(--oliva);
+}
+.tile:hover .tile__desc{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
 /* ============================================================
    5. ÁREAS — sanfona horizontal (expande ao clicar)
@@ -387,7 +398,8 @@ p{margin:0}
   .escritorio,.contato{grid-template-columns:1fr}
   .escritorio__img{min-height:340px;order:-1}
   .contato__img{min-height:320px}
-  .servicos__linha{flex-direction:column}
+  .servicos__setores-linha{flex-direction:column}
+  .servicos__setores-barra{width:auto;height:1px}
   .servicos__triangulo{display:none}
   .metodo__grade{grid-template-columns:1fr}
   .sanfona{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -405,6 +417,7 @@ p{margin:0}
   .duo--inverso .duo__col:first-of-type{margin-top:0}
   .duo__col + .duo__col{padding-top:36px;border-top:1px solid var(--duo-linha)}
   .tiles{grid-template-columns:repeat(2,1fr)}
+  .tiles--7{grid-template-columns:repeat(2,1fr)}
   .form__linha{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
@@ -498,28 +511,28 @@ p{margin:0}
         <h2>Três compromissos que valem para todo cliente</h2>
       </div>
 
-      <div class="servicos__linha">
-        <div class="servicos__metodo rev">
-          <div class="metodo__grade">
-            <div class="bloco">
-              <h3>Linguagem de decisão</h3>
-              <p>Todo parecer termina com uma recomendação clara: o que fazer, qual o risco de fazer e qual o risco de não fazer. Sem fundamentação decorativa.</p>
-            </div>
-            <div class="bloco">
-              <h3>Honorário previsível</h3>
-              <p>Escopo, valor e forma de reajuste definidos antes do início. Trabalho fora do escopo só avança com aprovação por escrito.</p>
-            </div>
-            <div class="bloco bloco--largo">
-              <p>E um terceiro, que sustenta os dois anteriores: sigilo tratado como método. Documentos em ambiente controlado, acesso restrito à equipe do caso e política de retenção definida em contrato.</p>
-              <a href="#contato" class="btn">Solicitar proposta</a>
-            </div>
+      <div class="servicos__metodo rev">
+        <div class="metodo__grade">
+          <div class="bloco">
+            <h3>Linguagem de decisão</h3>
+            <p>Todo parecer termina com uma recomendação clara: o que fazer, qual o risco de fazer e qual o risco de não fazer. Sem fundamentação decorativa.</p>
+          </div>
+          <div class="bloco">
+            <h3>Honorário previsível</h3>
+            <p>Escopo, valor e forma de reajuste definidos antes do início. Trabalho fora do escopo só avança com aprovação por escrito.</p>
+          </div>
+          <div class="bloco bloco--largo">
+            <p>E um terceiro, que sustenta os dois anteriores: sigilo tratado como método. Documentos em ambiente controlado, acesso restrito à equipe do caso e política de retenção definida em contrato.</p>
+            <a href="#contato" class="btn">Solicitar proposta</a>
           </div>
         </div>
+      </div>
 
+      <div class="servicos__setores-linha">
         <div class="servicos__setores rev" id="setores">
           <div class="rotulo">Setores atendidos</div>
           <h3>Onde já conhecemos o terreno</h3>
-          <div class="tiles">
+          <div class="tiles tiles--7">
             <div class="tile">
               <span class="tile__nome">Agronegócio</span>
               <span class="tile__desc">Contratos de fornecimento, arrendamento rural e regularização fundiária para operações do campo.</span>
@@ -548,9 +561,42 @@ p{margin:0}
               <span class="tile__nome">Energia</span>
               <span class="tile__desc">Contratos de concessão, regulatório setorial e financiamento de projetos de energia.</span>
             </div>
+          </div>
+        </div>
+
+        <span class="servicos__setores-barra" aria-hidden="true"></span>
+
+        <div class="servicos__setores rev">
+          <div class="rotulo">Setores atendidos</div>
+          <h3>Onde já conhecemos o terreno</h3>
+          <div class="tiles tiles--7">
             <div class="tile">
-              <span class="tile__nome">Educação</span>
-              <span class="tile__desc">Contratos com mantenedoras, compliance educacional e relações trabalhistas do setor.</span>
+              <span class="tile__nome">Agronegócio</span>
+              <span class="tile__desc">Contratos de fornecimento, arrendamento rural e regularização fundiária para operações do campo.</span>
+            </div>
+            <div class="tile">
+              <span class="tile__nome">Construção</span>
+              <span class="tile__desc">Contratos de empreitada, incorporação e due diligence para obras e desenvolvimento imobiliário.</span>
+            </div>
+            <div class="tile">
+              <span class="tile__nome">Saúde</span>
+              <span class="tile__desc">Compliance regulatório, contratos com operadoras e estruturação de clínicas e hospitais.</span>
+            </div>
+            <div class="tile">
+              <span class="tile__nome">Varejo</span>
+              <span class="tile__desc">Contratos de fornecimento, franquia e defesa em relações de consumo para operações de varejo.</span>
+            </div>
+            <div class="tile">
+              <span class="tile__nome">Tecnologia</span>
+              <span class="tile__desc">Contratos de licenciamento, SaaS, proteção de dados e estruturação societária para startups.</span>
+            </div>
+            <div class="tile">
+              <span class="tile__nome">Logística</span>
+              <span class="tile__desc">Contratos de transporte, armazenagem e responsabilidade civil na cadeia de distribuição.</span>
+            </div>
+            <div class="tile">
+              <span class="tile__nome">Energia</span>
+              <span class="tile__desc">Contratos de concessão, regulatório setorial e financiamento de projetos de energia.</span>
             </div>
           </div>
         </div>
