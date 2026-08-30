@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Victor Caminha — Advocacia Empresarial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  /* cor */
+  --tinta:      #0E1417;   /* fundo escuro, base do site      */
+  --grafite:    #192226;   /* painéis e cards escuros         */
+  --grafite-2:  #222D32;   /* bordas sobre escuro             */
+  --calcario:   #E3E0D8;   /* painel claro (o "cinza claro")  */
+  --papel:      #F4F2ED;   /* cards sobre o painel claro      */
+  --latao:      #A8834E;   /* acento — latão fosco            */
+  --latao-luz:  #C9A66B;
+  --oliva:      #2C3A34;   /* acento secundário               */
+  --texto-esc:  #131A1D;   /* texto sobre claro               */
+  --texto-mid:  #5C6669;   /* texto secundário sobre claro    */
+  --texto-clr:  #D8DBDA;   /* texto sobre escuro              */
+  --texto-clr-2:#8D9899;
+
+  /* tipografia */
+  --display: "Bodoni Moda", "Times New Roman", serif;
+  --corpo:   "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  /* medidas */
+  --chanfro: 34px;         /* corte de canto dos painéis      */
+  --gutter: clamp(20px, 5vw, 72px);
+  --maxw: 1280px;
+  --t: 620ms cubic-bezier(.16,.84,.28,1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--tinta);
+  color:var(--texto-clr);
+  font-family:var(--corpo);
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--latao-luz);outline-offset:3px}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* eyebrow / rótulo utilitário */
+.rotulo{
+  font-size:11px;letter-spacing:.26em;text-transform:uppercase;
+  font-weight:600;color:var(--latao);
+  display:flex;align-items:center;gap:14px;
+}
+.rotulo::before{content:"";width:26px;height:1px;background:var(--latao);flex:none}
+
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.08;letter-spacing:-.015em}
+h2{font-size:clamp(30px,4.2vw,52px)}
+h3{font-size:clamp(20px,2.2vw,26px);line-height:1.22}
+p{margin:0}
+.lead{font-size:clamp(16px,1.35vw,18px);color:var(--texto-clr-2)}
+
+/* botões */
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:15px 28px;font-size:12px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  border:1px solid var(--latao);color:var(--latao-luz);
+  transition:background .3s ease,color .3s ease;
+}
+.btn:hover{background:var(--latao);color:var(--tinta)}
+.btn--solido{background:var(--latao);color:#0E1417;border-color:var(--latao)}
+.btn--solido:hover{background:var(--latao-luz);border-color:var(--latao-luz)}
+.btn--escuro{border-color:var(--texto-esc);color:var(--texto-esc)}
+.btn--escuro:hover{background:var(--texto-esc);color:var(--papel)}
+
+/* placeholder de imagem — troque a .slot por <img> */
+.slot{
+  position:relative;background:#767676;overflow:hidden;
+}
+.slot::before{ /* trama diagonal, o motivo do rascunho */
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(58deg,rgba(255,255,255,.16) 0 1px,transparent 1px 78px);
+}
+.slot::after{
+  content:attr(data-label);position:absolute;left:14px;bottom:12px;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.62);
+}
+
+/* revelação em scroll */
+.rev{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,.84,.28,1)}
+.rev.vis{opacity:1;transform:none}
+
+/* ============================================================
+   TOPO
+   ============================================================ */
+.topo{
+  position:fixed;inset:0 0 auto 0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;padding:18px var(--gutter);
+  background:rgba(14,20,23,.72);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.topo__marca{font-family:var(--display);font-size:19px;letter-spacing:.04em}
+.topo__marca span{color:var(--latao)}
+.topo__nav{display:flex;gap:34px;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.topo__nav a{color:var(--texto-clr-2);transition:color .25s}
+.topo__nav a:hover{color:var(--papel)}
+.topo .btn{padding:11px 20px}
+
+/* ============================================================
+   1. HERO — painel claro à esquerda, imagem à direita
+   ============================================================ */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:140px 0 90px}
+.hero__fundo{position:absolute;inset:0;display:grid;grid-template-columns:44% 56%}
+.hero__fundo span:first-child{background:var(--calcario)}
+.hero__fundo span:last-child{background:var(--grafite)}
+.hero__retrato{
+  position:absolute;left:var(--gutter);top:50%;transform:translateY(-50%);
+  width:min(22vw,240px);aspect-ratio:3/4.4;
+}
+.hero__foto{position:absolute;right:0;top:0;bottom:0;width:56%}
+.hero__foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,20,23,.55),rgba(14,20,23,.15))}
+
+.hero__conteudo{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
+.marca{
+  background:var(--papel);color:var(--texto-esc);
+  padding:30px clamp(34px,6vw,78px);
+  box-shadow:0 26px 60px -30px rgba(0,0,0,.7);
+}
+.marca__nome{font-family:var(--display);font-size:clamp(30px,4.6vw,54px);line-height:1;letter-spacing:.005em}
+.marca__linha{display:flex;align-items:center;gap:14px;margin-top:14px}
+.marca__linha::before,.marca__linha::after{content:"";height:1px;flex:1;background:rgba(19,26,29,.28)}
+.marca__linha span{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--texto-mid);white-space:nowrap}
+
+.hero__titulo{
+  margin-top:44px;max-width:15ch;
+  font-size:clamp(34px,5.6vw,66px);color:var(--papel);
+  text-shadow:0 2px 30px rgba(14,20,23,.6);
+}
+.hero__titulo em{font-style:italic;color:var(--latao-luz)}
+.hero__sub{margin-top:20px;max-width:52ch;color:var(--texto-clr);text-shadow:0 1px 18px rgba(14,20,23,.9)}
+.hero__acoes{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.hero__rodape{
+  position:absolute;left:var(--gutter);bottom:34px;z-index:2;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--texto-mid);
+}
+
+/* ============================================================
+   2. O ESCRITÓRIO — imagem à esquerda, dois painéis reveladores
+   ============================================================ */
+.escritorio{
+  display:grid;grid-template-columns:37% 63%;background:var(--calcario);
+  margin-top:clamp(90px,16vh,190px);   /* faixa escura entre o hero e a seção */
+}
+.escritorio__img{min-height:660px}
+
+/* trio de triângulos em degradê — do preto ao branco */
+.escritorio__degrade{position:relative;overflow:hidden;background:var(--calcario)}
+.escritorio__degrade span{position:absolute;inset:0}
+.escritorio__degrade span:nth-child(1){background:var(--texto-mid);clip-path:polygon(0 0,100% 0,0 100%)}
+.escritorio__degrade span:nth-child(2){background:var(--grafite-2);clip-path:polygon(0 0,100% 0,0 66%)}
+.escritorio__degrade span:nth-child(3){background:var(--tinta);clip-path:polygon(0 0,100% 0,0 34%)}
+
+.escritorio__lado{padding:clamp(48px,5.5vw,84px) clamp(28px,3.6vw,60px);color:var(--texto-esc)}
+.escritorio__intro{max-width:52ch;margin-inline:auto;text-align:center}
+.escritorio__intro .rotulo{justify-content:center}
+.escritorio__intro h2{
+  font-size:clamp(23px,2.4vw,32px);      /* título mais discreto */
+  margin:16px 0 12px;color:var(--texto-esc);
+}
+.escritorio__intro p{font-size:14px;line-height:1.6;color:var(--texto-mid);max-width:48ch;margin-inline:auto}
+
+/* ------------------------------------------------------------
+   COMPONENTE REUTILIZÁVEL — .duo
+   Duas colunas propositalmente desalinhadas, separadas por uma
+   barra vertical central.
+
+   <div class="duo">                     fundo claro (padrão)
+   <div class="duo duo--escuro">         fundo escuro
+   <div class="duo duo--suave|--forte">  intensidade do desalinho
+   <div class="duo duo--inverso">        desce a 1ª coluna
+   Filhos: .duo__barra, .duo__col, .duo__col--desce
+   ------------------------------------------------------------ */
+.duo{
+  --duo-linha:rgba(19,26,29,.32);
+  --duo-desloca:clamp(48px,7vw,110px);
+  --duo-gap:clamp(30px,3.6vw,60px);
+  position:relative;display:grid;grid-template-columns:1fr 1fr;
+  column-gap:var(--duo-gap);
+  margin-top:clamp(40px,5vw,68px);
+}
+.duo--escuro{--duo-linha:rgba(255,255,255,.18)}
+.duo--suave{--duo-desloca:clamp(26px,3vw,56px)}
+.duo--forte{--duo-desloca:clamp(70px,9vw,150px)}
+
+.duo__barra{
+  position:absolute;left:50%;top:-16px;bottom:-16px;width:1px;transform:translateX(-50%);
+  background:linear-gradient(180deg,transparent 0,var(--duo-linha) 9%,var(--duo-linha) 91%,transparent 100%);
+}
+.duo__barra::after{ /* marca de latão na altura do desalinho */
+  content:"";position:absolute;left:-1px;top:38%;width:3px;height:58px;background:var(--latao);
+}
+
+.duo__col{color:var(--texto-esc);padding-right:4px}
+.duo__col--desce{margin-top:var(--duo-desloca)}
+.duo--inverso .duo__col:first-of-type{margin-top:var(--duo-desloca)}
+.duo--inverso .duo__col--desce{margin-top:0}
+
+.duo__num{font-family:var(--display);font-size:13px;letter-spacing:.22em;color:var(--latao)}
+.duo__col h3{margin:16px 0 14px;font-size:clamp(22px,2.5vw,30px);color:var(--texto-esc)}
+.duo__col p{font-size:16.5px;line-height:1.68;color:var(--texto-mid)}
+.duo__extra{
+  margin-top:20px;padding-top:18px;font-size:15px;color:var(--texto-esc);
+  border-top:1px solid var(--duo-linha);
+}
+.duo--escuro .duo__col,
+.duo--escuro .duo__col h3,
+.duo--escuro .duo__extra{color:var(--texto-clr)}
+.duo--escuro .duo__col h3{color:var(--papel)}
+.duo--escuro .duo__col p{color:var(--texto-clr-2)}
+
+/* ============================================================
+   3. MÉTODO — painel claro com cantos chanfrados
+   ============================================================ */
+.metodo{padding:clamp(80px,10vw,140px) 0;background:var(--tinta)}
+.chanfro{
+  background:var(--calcario);color:var(--texto-esc);
+  clip-path:polygon(var(--chanfro) 0,100% 0,100% calc(100% - var(--chanfro)),calc(100% - var(--chanfro)) 100%,0 100%,0 var(--chanfro));
+  padding:clamp(44px,6vw,78px);
+}
+.metodo__topo{text-align:center;max-width:60ch;margin-inline:auto}
+.metodo__topo .rotulo{justify-content:center}
+.metodo__topo h2{margin:20px 0 0}
+.metodo__grade{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+.bloco{background:var(--grafite);color:var(--texto-clr);padding:32px 30px}
+.bloco h3{color:var(--papel);margin-bottom:12px}
+.bloco p{font-size:14.5px;color:var(--texto-clr-2)}
+.bloco--largo{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:26px}
+.bloco--largo p{max-width:58ch}
+
+/* ============================================================
+   4. SETORES + NÚMEROS — duas colunas
+   ============================================================ */
+.setores{padding:0 0 clamp(80px,10vw,140px);background:var(--tinta)}
+.setores__grade{display:grid;grid-template-columns:1.05fr 1fr;gap:0}
+.setores__col{padding:clamp(40px,5vw,64px)}
+.setores__col + .setores__col{border-left:1px solid rgba(19,26,29,.16)}
+.setores__col h3{margin:18px 0 26px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{
+  background:var(--grafite);color:var(--texto-clr-2);
+  aspect-ratio:1.45/1;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:8px;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.3;
+  transition:background .3s ease,color .3s ease;
+}
+.tile:hover{background:var(--oliva);color:var(--papel)}
+.setores__texto p{color:var(--texto-mid);max-width:46ch}
+.numeros{margin-top:34px;display:grid;gap:1px;background:rgba(19,26,29,.16)}
+.numero{background:var(--calcario);padding:18px 4px 18px 0;display:flex;align-items:baseline;gap:18px}
+.numero b{font-family:var(--display);font-size:36px;font-weight:400;color:var(--texto-esc);min-width:108px}
+.numero span{font-size:12.5px;letter-spacing:.06em;color:var(--texto-mid)}
+
+/* ============================================================
+   5. ÁREAS — sanfona horizontal (expande ao clicar)
+   ============================================================ */
+.areas{padding:clamp(80px,10vw,130px) 0;background:var(--grafite)}
+.areas__cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:44px}
+.areas__cab h2{color:var(--papel);max-width:16ch}
+.setas{display:flex;gap:10px}
+.seta{
+  width:48px;height:48px;border:1px solid var(--grafite-2);color:var(--texto-clr-2);
+  display:grid;place-items:center;transition:border-color .3s,color .3s,background .3s;
+}
+.seta:hover{border-color:var(--latao);color:var(--latao-luz)}
+
+.sanfona{display:flex;gap:10px;min-height:440px}
+.aba{
+  position:relative;flex:1 1 0;min-width:0;
+  background:var(--tinta);color:var(--texto-clr);
+  padding:26px 22px;overflow:hidden;text-align:left;
+  transition:flex-grow var(--t),background var(--t);
+}
+.aba:hover{background:#0A1013}
+.aba[aria-expanded="true"]{flex-grow:4.6;background:#0A1013}
+.aba__vert{
+  position:absolute;left:22px;bottom:26px;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:var(--display);font-size:22px;white-space:nowrap;color:var(--papel);
+  transition:opacity .3s ease;
+}
+.aba__num{position:absolute;top:24px;left:22px;font-size:11px;letter-spacing:.2em;color:var(--latao)}
+.aba__painel{
+  opacity:0;visibility:hidden;transition:opacity .35s ease .12s;
+  max-width:44ch;margin-top:52px;
+}
+.aba[aria-expanded="true"] .aba__vert{opacity:0}
+.aba[aria-expanded="true"] .aba__painel{opacity:1;visibility:visible}
+.aba__painel h3{color:var(--papel);margin-bottom:14px}
+.aba__painel p{font-size:14.5px;color:var(--texto-clr-2)}
+.aba__lista{margin:18px 0 0;padding:0;list-style:none;font-size:13.5px;color:var(--texto-clr-2)}
+.aba__lista li{padding:7px 0 7px 18px;border-top:1px solid var(--grafite-2);position:relative}
+.aba__lista li::before{content:"";position:absolute;left:0;top:15px;width:7px;height:1px;background:var(--latao)}
+
+/* ============================================================
+   6. CONTATO — formulário à esquerda, imagem à direita
+   ============================================================ */
+.contato{display:grid;grid-template-columns:52% 48%;background:var(--calcario)}
+.contato__lado{padding:clamp(48px,6vw,88px) clamp(28px,4vw,64px);color:var(--texto-esc)}
+.contato__lado h2{margin:20px 0 12px}
+.contato__lado > p{color:var(--texto-mid);max-width:42ch}
+.form{background:var(--papel);padding:30px;margin-top:32px;box-shadow:0 24px 50px -34px rgba(0,0,0,.5)}
+.form__linha{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.campo{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.campo label{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--texto-mid)}
+.campo input,.campo textarea,.campo select{
+  font:inherit;font-size:15px;color:var(--texto-esc);
+  background:transparent;border:0;border-bottom:1px solid rgba(19,26,29,.25);
+  padding:9px 2px;transition:border-color .25s;
+}
+.campo input:focus,.campo textarea:focus,.campo select:focus{outline:none;border-bottom-color:var(--latao)}
+.campo textarea{resize:vertical;min-height:84px}
+.form .btn{width:100%;justify-content:center;margin-top:6px}
+.form__nota{margin-top:14px;font-size:11.5px;color:var(--texto-mid);text-align:center}
+.canais{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.canal{
+  background:var(--grafite);color:var(--texto-clr);padding:16px 14px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-align:center;
+  transition:background .3s,color .3s;
+}
+.canal:hover{background:var(--latao);color:var(--tinta)}
+.contato__img{min-height:640px}
+
+/* rodapé */
+.rodape{
+  background:var(--tinta);padding:44px 0;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.rodape__in{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;
+  font-size:11.5px;letter-spacing:.1em;color:var(--texto-mid);text-transform:uppercase}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width:1000px){
+  .topo__nav{display:none}
+  .hero__fundo{grid-template-columns:1fr}
+  .hero__fundo span:first-child{display:none}
+  .hero__retrato{display:none}
+  .hero__foto{width:100%}
+  .escritorio,.contato{grid-template-columns:1fr}
+  .escritorio__img{min-height:340px;order:-1}
+  .contato__img{min-height:320px}
+  .setores__grade{grid-template-columns:1fr}
+  .setores__col + .setores__col{border-left:0;border-top:1px solid rgba(19,26,29,.16)}
+  .metodo__grade{grid-template-columns:1fr}
+  .sanfona{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .aba{flex:0 0 78%;scroll-snap-align:start}
+  .aba[aria-expanded="true"]{flex:0 0 78%}
+  .aba__vert{position:static;writing-mode:horizontal-tb;transform:none;margin-top:34px}
+  .aba__painel{opacity:1;visibility:visible;margin-top:20px}
+  .aba[aria-expanded="true"] .aba__vert{opacity:1}
+}
+@media (max-width:620px){
+  :root{--chanfro:22px}
+  .duo{grid-template-columns:1fr;row-gap:40px}
+  .duo__barra{display:none}
+  .duo__col--desce,
+  .duo--inverso .duo__col:first-of-type{margin-top:0}
+  .duo__col + .duo__col{padding-top:36px;border-top:1px solid var(--duo-linha)}
+  .tiles{grid-template-columns:repeat(3,1fr)}
+  .form__linha{grid-template-columns:1fr}
+  .numero b{min-width:84px;font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rev{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOPO ============ -->
+<header class="topo">
+  <a href="#topo" class="topo__marca">Victor<span>.</span>Caminha</a>
+  <nav class="topo__nav">
+    <a href="#escritorio">Escritório</a>
+    <a href="#metodo">Método</a>
+    <a href="#setores">Setores</a>
+    <a href="#areas">Áreas</a>
+  </nav>
+  <a href="#contato" class="btn">Agendar conversa</a>
+</header>
+
+<main id="topo">
+
+  <!-- ============ 1. HERO ============ -->
+  <section class="hero">
+    <div class="hero__fundo" aria-hidden="true"><span></span><span></span></div>
+    <!-- troque as .slot por <img src="..." alt=""> -->
+    <div class="slot hero__retrato" data-label="Retrato 3:4" aria-hidden="true"></div>
+    <div class="slot hero__foto" data-label="Ambiente / fachada" aria-hidden="true"></div>
+
+    <div class="wrap hero__conteudo">
+      <div class="marca">
+        <div class="marca__nome">Victor Caminha</div>
+        <div class="marca__linha"><span>Advocacia Empresarial</span></div>
+      </div>
+
+      <h1 class="hero__titulo">Direito que <em>acompanha</em> a decisão</h1>
+      <p class="hero__sub lead">Assessoria jurídica contínua para empresas que precisam decidir rápido sem abrir mão da segurança do contrato, da estrutura societária e da conta no fim do mês.</p>
+
+      <div class="hero__acoes">
+        <a href="#contato" class="btn btn--solido">Falar com o escritório</a>
+        <a href="#areas" class="btn">Ver áreas de atuação</a>
+      </div>
+    </div>
+
+    <div class="hero__rodape">OAB/PI 0.000 · Atendimento em todo o Brasil</div>
+  </section>
+
+  <!-- ============ 2. O ESCRITÓRIO ============ -->
+  <section class="escritorio" id="escritorio">
+    <div class="escritorio__img escritorio__degrade" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="escritorio__lado">
+      <div class="escritorio__intro rev">
+        <div class="rotulo">O escritório</div>
+        <h2>Um jurídico por perto, não um parecer por e-mail</h2>
+        <p>Trabalhamos dentro da rotina da empresa: no contrato antes da assinatura, na reunião de sócios antes do impasse, na operação antes da autuação. A litigância existe — mas é a última linha, não a primeira.</p>
+      </div>
+
+      <div class="duo rev">
+        <span class="duo__barra" aria-hidden="true"></span>
+
+        <article class="duo__col">
+          <span class="duo__num">01</span>
+          <h3>Consultivo permanente</h3>
+          <p>Um advogado responsável pela sua conta, com prazo de resposta acordado e reuniões mensais de acompanhamento.</p>
+          <p class="duo__extra">Inclui revisão de contratos recorrentes, pareceres objetivos e apoio em negociação.</p>
+        </article>
+
+        <article class="duo__col duo__col--desce">
+          <span class="duo__num">02</span>
+          <h3>Contencioso estratégico</h3>
+          <p>Quando a disputa é inevitável, ela entra com tese definida, custo estimado e cenário de acordo desenhado desde o início.</p>
+          <p class="duo__extra">Relatórios trimestrais de carteira com risco provisionado por processo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. MÉTODO ============ -->
+  <section class="metodo" id="metodo">
+    <div class="wrap">
+      <div class="chanfro rev">
+        <div class="metodo__topo">
+          <div class="rotulo">Como trabalhamos</div>
+          <h2>Três compromissos que valem para todo cliente</h2>
+        </div>
+
+        <div class="metodo__grade">
+          <div class="bloco">
+            <h3>Linguagem de decisão</h3>
+            <p>Todo parecer termina com uma recomendação clara: o que fazer, qual o risco de fazer e qual o risco de não fazer. Sem fundamentação decorativa.</p>
+          </div>
+          <div class="bloco">
+            <h3>Honorário previsível</h3>
+            <p>Escopo, valor e forma de reajuste definidos antes do início. Trabalho fora do escopo só avança com aprovação por escrito.</p>
+          </div>
+          <div class="bloco bloco--largo">
+            <p>E um terceiro, que sustenta os dois anteriores: sigilo tratado como método. Documentos em ambiente controlado, acesso restrito à equipe do caso e política de retenção definida em contrato.</p>
+            <a href="#contato" class="btn">Solicitar proposta</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. SETORES + NÚMEROS ============ -->
+  <section class="setores" id="setores">
+    <div class="wrap">
+      <div class="chanfro rev">
+        <div class="setores__grade">
+          <div class="setores__col">
+            <div class="rotulo">Setores atendidos</div>
+            <h3>Onde já conhecemos o terreno</h3>
+            <div class="tiles">
+              <div class="tile">Agronegócio</div>
+              <div class="tile">Construção</div>
+              <div class="tile">Saúde</div>
+              <div class="tile">Varejo</div>
+              <div class="tile">Tecnologia</div>
+              <div class="tile">Logística</div>
+              <div class="tile">Energia</div>
+              <div class="tile">Educação</div>
+            </div>
+          </div>
+
+          <div class="setores__col setores__texto">
+            <div class="rotulo">Em números</div>
+            <h3>O que sustenta a recomendação</h3>
+            <p>Experiência concentrada em operações empresariais — societário, contratos e disputas de médio e grande porte.</p>
+            <div class="numeros">
+              <div class="numero"><b>12</b><span>anos dedicados exclusivamente ao direito empresarial</span></div>
+              <div class="numero"><b>+400</b><span>contratos revisados e negociados</span></div>
+              <div class="numero"><b>72h</b><span>prazo máximo de retorno para clientes do consultivo</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. ÁREAS (expande ao clicar) ============ -->
+  <section class="areas" id="areas">
+    <div class="wrap">
+      <div class="areas__cab">
+        <div>
+          <div class="rotulo">Áreas de atuação</div>
+          <h2 style="margin-top:18px">Escolha a frente e veja o que está incluído</h2>
+        </div>
+        <div class="setas">
+          <button class="seta" data-dir="-1" aria-label="Área anterior">&#8592;</button>
+          <button class="seta" data-dir="1" aria-label="Próxima área">&#8594;</button>
+        </div>
+      </div>
+
+      <div class="sanfona" id="sanfona">
+        <button class="aba" aria-expanded="true">
+          <span class="aba__num">01</span>
+          <span class="aba__vert">Societário</span>
+          <div class="aba__painel">
+            <h3>Societário e governança</h3>
+            <p>Da constituição à saída de sócio: o desenho que evita que uma divergência vire uma paralisação.</p>
+            <ul class="aba__lista">
+              <li>Acordo de sócios e cláusulas de saída</li>
+              <li>Reorganização e holding patrimonial</li>
+              <li>Due diligence e compra e venda de participação</li>
+            </ul>
+          </div>
+        </button>
+
+        <button class="aba" aria-expanded="false">
+          <span class="aba__num">02</span>
+          <span class="aba__vert">Contratos</span>
+          <div class="aba__painel">
+            <h3>Contratos empresariais</h3>
+            <p>Revisão e redação com foco em prazo, garantia e o que acontece quando o outro lado não cumpre.</p>
+            <ul class="aba__lista">
+              <li>Fornecimento, distribuição e representação</li>
+              <li>Prestação de serviços e licenciamento</li>
+              <li>Padronização de minutas da empresa</li>
+            </ul>
+          </div>
+        </button>
+
+        <button class="aba" aria-expanded="false">
+          <span class="aba__num">03</span>
+          <span class="aba__vert">Tributário</span>
+          <div class="aba__painel">
+            <h3>Tributário empresarial</h3>
+            <p>Planejamento dentro da lei, defesa administrativa e recuperação do que foi pago a mais.</p>
+            <ul class="aba__lista">
+              <li>Revisão de regime e carga tributária</li>
+              <li>Defesas e recursos administrativos</li>
+              <li>Parcelamentos e transação tributária</li>
+            </ul>
+          </div>
+        </button>
+
+        <button class="aba" aria-expanded="false">
+          <span class="aba__num">04</span>
+          <span class="aba__vert">Trabalhista</span>
+          <div class="aba__painel">
+            <h3>Trabalhista preventivo</h3>
+            <p>Ajuste da rotina de RH para reduzir passivo antes que ele chegue como reclamação.</p>
+            <ul class="aba__lista">
+              <li>Auditoria de contratos e jornadas</li>
+              <li>Terceirização e contratos PJ</li>
+              <li>Defesa em reclamações e acordos</li>
+            </ul>
+          </div>
+        </button>
+
+        <button class="aba" aria-expanded="false">
+          <span class="aba__num">05</span>
+          <span class="aba__vert">Reestruturação</span>
+          <div class="aba__painel">
+            <h3>Crise e reestruturação</h3>
+            <p>Renegociação de dívidas, recuperação judicial e extrajudicial com plano viável de execução.</p>
+            <ul class="aba__lista">
+              <li>Diagnóstico de endividamento</li>
+              <li>Negociação com credores</li>
+              <li>Recuperação judicial e extrajudicial</li>
+            </ul>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. CONTATO ============ -->
+  <section class="contato" id="contato">
+    <div class="contato__lado">
+      <div class="rotulo">Contato</div>
+      <h2>Comece pela conversa inicial</h2>
+      <p>Trinta minutos para entender o cenário da empresa e dizer se conseguimos ajudar. Sem custo e sem compromisso de contratação.</p>
+
+      <form class="form" novalidate>
+        <div class="form__linha">
+          <div class="campo">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" type="text" autocomplete="name" required>
+          </div>
+          <div class="campo">
+            <label for="empresa">Empresa</label>
+            <input id="empresa" name="empresa" type="text" autocomplete="organization">
+          </div>
+        </div>
+        <div class="form__linha">
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="campo">
+            <label for="assunto">Assunto</label>
+            <select id="assunto" name="assunto">
+              <option>Societário e governança</option>
+              <option>Contratos empresariais</option>
+              <option>Tributário</option>
+              <option>Trabalhista</option>
+              <option>Crise e reestruturação</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="msg">Como podemos ajudar</label>
+          <textarea id="msg" name="msg" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn--escuro">Enviar mensagem</button>
+        <p class="form__nota">As informações enviadas são tratadas com sigilo profissional.</p>
+      </form>
+
+      <div class="canais">
+        <a class="canal" href="#">WhatsApp</a>
+        <a class="canal" href="#">Telefone</a>
+        <a class="canal" href="#">E-mail</a>
+      </div>
+    </div>
+
+    <div class="slot contato__img" data-label="Imagem do escritório" aria-hidden="true"></div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape__in">
+    <span>Victor Caminha — Advocacia Empresarial</span>
+    <span>OAB/PI 0.000 · Rua Exemplo, 000 — Sala 000</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<script>
+// sanfona horizontal — expande ao clicar
+(function(){
+  const sanfona = document.getElementById('sanfona');
+  if(!sanfona) return;
+  const abas = [...sanfona.querySelectorAll('.aba')];
+  const abrir = i => abas.forEach((a,n)=>a.setAttribute('aria-expanded', n===i));
+  abas.forEach((a,i)=>a.addEventListener('click',()=>abrir(i)));
+
+  document.querySelectorAll('.seta').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const atual = abas.findIndex(a=>a.getAttribute('aria-expanded')==='true');
+      const prox = (atual + Number(btn.dataset.dir) + abas.length) % abas.length;
+      abrir(prox);
+      if(window.matchMedia('(max-width:1000px)').matches){
+        abas[prox].scrollIntoView({behavior:'smooth',inline:'start',block:'nearest'});
+      }
+    });
+  });
+})();
+
+// revelação em scroll
+(function(){
+  const alvos = document.querySelectorAll('.rev');
+  if(!('IntersectionObserver' in window)){ alvos.forEach(e=>e.classList.add('vis')); return; }
+  const io = new IntersectionObserver((entradas)=>{
+    entradas.forEach((e,i)=>{
+      if(e.isIntersecting){
+        e.target.style.transitionDelay = (i*90)+'ms';
+        e.target.classList.add('vis');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.18});
+  alvos.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>
