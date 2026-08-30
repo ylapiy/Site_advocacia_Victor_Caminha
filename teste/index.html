@@ -222,37 +222,49 @@
         <div class="cases-track">
 
           <div class="case-card">
-            <div class="case-symbol">&#9878;</div>
+            <div class="case-shape">
+              <div class="case-symbol">&#9878;</div>
+            </div>
             <h3>Case 1</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
 
           <div class="case-card">
-            <div class="case-symbol">&#128188;</div>
+            <div class="case-shape">
+              <div class="case-symbol">&#128188;</div>
+            </div>
             <h3>Case 2</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
 
           <div class="case-card">
-            <div class="case-symbol">&#128196;</div>
+            <div class="case-shape">
+              <div class="case-symbol">&#128196;</div>
+            </div>
             <h3>Case 3</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
 
           <div class="case-card">
-            <div class="case-symbol">&#128100;</div>
+            <div class="case-shape">
+              <div class="case-symbol">&#128100;</div>
+            </div>
             <h3>Case 4</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
 
           <div class="case-card">
-            <div class="case-symbol">&#127974;</div>
+            <div class="case-shape">
+              <div class="case-symbol">&#127974;</div>
+            </div>
             <h3>Case 5</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
 
           <div class="case-card">
-            <div class="case-symbol">&#9997;</div>
+            <div class="case-shape">
+              <div class="case-symbol">&#9997;</div>
+            </div>
             <h3>Case 6</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
@@ -279,16 +291,18 @@
       if (!track || !prevBtn || !nextBtn) return;
 
       var cards = Array.prototype.slice.call(track.querySelectorAll('.case-card'));
-      var currentIndex = 0;
+      var currentIndex = 1;
 
       function render() {
         cards.forEach(function (card, index) {
-          card.classList.remove('is-current', 'is-side', 'is-hidden');
+          card.classList.remove('is-current', 'is-side', 'is-prev', 'is-next', 'is-hidden');
 
           if (index === currentIndex) {
             card.classList.add('is-current');
-          } else if (index === currentIndex - 1 || index === currentIndex + 1) {
-            card.classList.add('is-side');
+          } else if (index === currentIndex - 1) {
+            card.classList.add('is-side', 'is-prev');
+          } else if (index === currentIndex + 1) {
+            card.classList.add('is-side', 'is-next');
           } else {
             card.classList.add('is-hidden');
           }

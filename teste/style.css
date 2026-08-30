@@ -356,25 +356,17 @@ ul {
 .cases-track {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 24px;
+  gap: 32px;
   overflow: hidden;
   min-height: 340px;
 }
 
 .case-card {
   flex: 0 0 auto;
-  width: 200px;
-  border: 2px solid #000;
-  border-radius: 50%;
-  aspect-ratio: 1 / 1;
-  padding: 24px;
+  width: 220px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   transition: all 0.3s ease;
 }
 
@@ -388,16 +380,28 @@ ul {
 
 .case-card.is-current {
   width: 320px;
-  aspect-ratio: auto;
-  min-height: 320px;
-  border-radius: 16px;
-  padding: 40px 28px;
+}
+
+.case-shape {
+  width: 100%;
+  height: 260px;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-card.is-prev .case-shape {
+  border-radius: 130px 0 0 130px;
+}
+
+.case-card.is-next .case-shape {
+  border-radius: 0 130px 130px 0;
 }
 
 .case-symbol {
   width: 64px;
   height: 64px;
-  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -414,16 +418,12 @@ ul {
 
 .case-card h3 {
   font-size: 16px;
+  margin-top: 20px;
   margin-bottom: 8px;
 }
 
 .case-card p {
   font-size: 13px;
-  display: none;
-}
-
-.case-card.is-current p {
-  display: block;
 }
 
 .cases-cta {
