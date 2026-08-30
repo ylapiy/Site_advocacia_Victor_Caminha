@@ -208,5 +208,113 @@
     </div>
   </section>
 
+  <section class="cases">
+    <div class="container">
+
+      <div class="cases-header">
+        <h2>Case results that speak for themselves</h2>
+      </div>
+
+      <div class="cases-carousel">
+
+        <button type="button" class="cases-arrow cases-arrow-prev" aria-label="Caso anterior">&#8592;</button>
+
+        <div class="cases-track">
+
+          <div class="case-card">
+            <div class="case-symbol">&#9878;</div>
+            <h3>Case 1</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+
+          <div class="case-card">
+            <div class="case-symbol">&#128188;</div>
+            <h3>Case 2</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+
+          <div class="case-card">
+            <div class="case-symbol">&#128196;</div>
+            <h3>Case 3</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+
+          <div class="case-card">
+            <div class="case-symbol">&#128100;</div>
+            <h3>Case 4</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+
+          <div class="case-card">
+            <div class="case-symbol">&#127974;</div>
+            <h3>Case 5</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+
+          <div class="case-card">
+            <div class="case-symbol">&#9997;</div>
+            <h3>Case 6</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+
+        </div>
+
+        <button type="button" class="cases-arrow cases-arrow-next" aria-label="Próximo caso">&#8594;</button>
+
+      </div>
+
+      <div class="cases-cta">
+        <a href="#" class="btn btn-secondary">Talk to an Attorney</a>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var track = document.querySelector('.cases-track');
+      var prevBtn = document.querySelector('.cases-arrow-prev');
+      var nextBtn = document.querySelector('.cases-arrow-next');
+
+      if (!track || !prevBtn || !nextBtn) return;
+
+      var cards = Array.prototype.slice.call(track.querySelectorAll('.case-card'));
+      var currentIndex = 0;
+
+      function render() {
+        cards.forEach(function (card, index) {
+          card.classList.remove('is-current', 'is-side', 'is-hidden');
+
+          if (index === currentIndex) {
+            card.classList.add('is-current');
+          } else if (index === currentIndex - 1 || index === currentIndex + 1) {
+            card.classList.add('is-side');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === cards.length - 1;
+      }
+
+      prevBtn.addEventListener('click', function () {
+        if (currentIndex > 0) {
+          currentIndex -= 1;
+          render();
+        }
+      });
+
+      nextBtn.addEventListener('click', function () {
+        if (currentIndex < cards.length - 1) {
+          currentIndex += 1;
+          render();
+        }
+      });
+
+      render();
+    })();
+  </script>
+
 </body>
 </html>
